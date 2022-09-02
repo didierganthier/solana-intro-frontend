@@ -11,18 +11,16 @@ const Home: NextPage = () => {
   const [address, setAddress] = useState('')
 
   const addressSubmittedHandler = (address: string) => {
-    try {
-      const key = new Web3.PublicKey(address);
-      setAddress(key.toBase58());
-      const connection = new Web3.Connection(Web3.clusterApiUrl('devnet'));
-      connection.getBalance(key).then(balance => {
-        setBalance(balance / Web3.LAMPORTS_PER_SOL);
-      });
-    } catch (error) {
+    const key = new Web3.PublicKey(address);
+    setAddress(key.toBase58());
+    const connection = new Web3.Connection(Web3.clusterApiUrl('devnet'));
+    connection.getBalance(key).then(balance => {
+      setBalance(balance / Web3.LAMPORTS_PER_SOL);
+    }).catch(error => {
       setAddress('');
       setBalance(0);
       alert(error);
-    }
+    });
   }
 
   return (
