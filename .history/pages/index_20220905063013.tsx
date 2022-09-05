@@ -17,7 +17,6 @@ const Home: NextPage = () => {
       setAddress(key.toBase58());
       const connection = new Web3.Connection(Web3.clusterApiUrl('devnet'));
       connection.getAccountInfo(key).then((account) => {
-        console.log(account);
         if (account?.executable) {
           setExecutable(true);
         } else {
@@ -43,7 +42,7 @@ const Home: NextPage = () => {
         <AddressForm handler={addressSubmittedHandler} />
         <p>{`Address: ${address}`}</p>
         <p>{`Balance: ${balance} SOL`}</p>
-        <p>{`Is it executable? ${executable? `Yup` : `Nope`}`}</p>
+        <p>{`Is it executable? ${executable? `` : ``}`}</p>
       </header>
     </div>
   )

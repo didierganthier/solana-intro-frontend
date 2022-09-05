@@ -9,7 +9,7 @@ import * as Web3 from '@solana/web3.js'
 const Home: NextPage = () => {
   const [balance, setBalance] = useState(0)
   const [address, setAddress] = useState('')
-  const [executable, setExecutable] = useState(false)
+  const [executaable, setExecutable] = useState(false)
 
   const addressSubmittedHandler = (address: string) => {
     try {
@@ -17,11 +17,10 @@ const Home: NextPage = () => {
       setAddress(key.toBase58());
       const connection = new Web3.Connection(Web3.clusterApiUrl('devnet'));
       connection.getAccountInfo(key).then((account) => {
-        console.log(account);
-        if (account?.executable) {
-          setExecutable(true);
+        if (account === null) {
+          setBalance(0);
         } else {
-          setExecutable(false);
+          setBalance(account.lamports);
         }
       });
       connection.getBalance(key).then(balance => {
@@ -43,7 +42,6 @@ const Home: NextPage = () => {
         <AddressForm handler={addressSubmittedHandler} />
         <p>{`Address: ${address}`}</p>
         <p>{`Balance: ${balance} SOL`}</p>
-        <p>{`Is it executable? ${executable? `Yup` : `Nope`}`}</p>
       </header>
     </div>
   )

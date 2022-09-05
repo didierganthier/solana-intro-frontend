@@ -17,7 +17,6 @@ const Home: NextPage = () => {
       setAddress(key.toBase58());
       const connection = new Web3.Connection(Web3.clusterApiUrl('devnet'));
       connection.getAccountInfo(key).then((account) => {
-        console.log(account);
         if (account?.executable) {
           setExecutable(true);
         } else {
